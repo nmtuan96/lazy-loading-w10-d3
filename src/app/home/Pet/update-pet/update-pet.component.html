@@ -1,0 +1,45 @@
+<h3>Create and Update Category</h3>
+<form class="example-form shadow p-3 mb-5 bg-white rounded" [formGroup]="pet" novalidate width="100%">
+
+      <div class="example-full-width">
+        <app-input-name formControlName="name"></app-input-name>
+      </div>
+
+
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Category</mat-label>
+        <select matNativeControl required formControlName="category" (change)="changeCategory($event)" >
+          <option *ngFor="let category of listCategory,let i = index"  value="{{i}}" >{{category.name}}</option>
+        </select>
+        <mat-error *ngIf="isValidatedCategory">Choose Category!</mat-error>
+      </mat-form-field>
+
+      
+      <section class="example-section">
+        <mat-label>Tags</mat-label>
+        <span class="example-list-section">
+          <div *ngFor="let tag of listTag,let i = index">
+            <mat-checkbox  (change)="changeSelection(i)" [checked]="listCheckBooleanTag[i]">{{tag.name}}</mat-checkbox>
+          </div>
+        </span>
+        <mat-error *ngIf="isValidateTag">Choose Tag!</mat-error>
+      </section>
+
+
+      <div>
+        <mat-label>Choose Image:  </mat-label>
+          <input type="file" formControlName="photoUrls">
+      </div>
+      <br>
+
+      <div>
+        <app-dropdown-status formControlName="status"></app-dropdown-status>
+      </div>
+
+      <section>
+        <div class="example-button-row">
+            <button mat-raised-button color="primary" [debounceTime]="700" type="submit" (debounceClick)="UpdatePet()" [disabled]="!pet.valid" appDebounceClick>Update</button>
+            <button mat-raised-button color="warn" type="submit" (click)="back()" >Back</button>
+        </div>
+    </section>
+</form>
